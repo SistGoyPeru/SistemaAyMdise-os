@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{% if object %}Editar{% else %}Nuevo{% endif %} Producto Final - SistGoy ERP{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <!-- Main Form -->
+    <div class="col-md-8">
+        <div class="card card-glass border-0 shadow-sm mb-4">
+            <div class="card-header bg-transparent border-0 py-3">
+                <h4 class="mb-0">{% if object %}Editar{% else %}Nuevo{% endif %} Producto Final</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" id="final-product-form">
+                    {% csrf_token %}
+
+                    <!-- Main Fields -->
+                    <div class="mb-4">
+                        <label for="{{ form.name.id_for_label }}" class="form-label text-muted small">NOMBRE DEL DISEÑO
+                            / PRODUCTO</label>
+                        {{ form.name }}
+                        {{ form.name.errors }}
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.base_product }}
+                                <label for="{{ form.base_product.id_for_label }}">Producto Base (Taza, Polo...)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.sale_price }}
+                                <label for="{{ form.sale_price.id_for_label }}">Precio de Venta</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small">COSTO INSUMOS (MANUAL)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">S/</span>
+                                {{ form.supplies_cost }}
+                            </div>
+                            <div class="form-text">Ej: Tinta, Papel, Cinta</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small">OTROS COSTOS</label>
+                            <div class="input-group">
+                                <span class="input-group-text">S/</span>
+                                {{ form.other_cost }}
+                            </div>
+                            <div class="form-text">Ej: Caja, Mano de obra extra</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Archivo de Diseño Principal</label>
+                        {{ form.design_file }}
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Archivos Adicionales (Maquetas, Alternativas)</label>
+                        {{ form.more_files }}
+                        <div class="form-text text-muted">Mantén presionado Ctrl para seleccionar varias imágenes.</div>
+
+                        {% if object and object.images.all %}
+                        <div class="mt-2 row g-2">
+                            <p class="mb-1 small text-muted">Archivos Existentes:</p>
+                            {% for img in object.images.all %}
+                            <div class="col-auto position-relative">
+                                <a href="{{ img.image.url }}" target="_blank">
+                                    <img src="{{ img.image.url }}" class="img-thumbnail" style="height: 60px;">
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- BOM Section Removed as per request -->
+                    {{ bom_formset.management_form }}
+                    <div style="display:none;">
+                        <!-- Hidden container just in case needed for formset validation -->
+                        {% for form in bom_formset %}
+                        {{ form.id }}
+                        {% endfor %}
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{% url 'finalproduct-list' %}" class="btn btn-outline-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Styles
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            if (input.type !== 'checkbox' && input.type !== 'file') input.classList.add('form-control');
+            if (input.type === 'file') input.classList.add('form-control');
+            if (input.type === 'checkbox') input.classList.add('form-check-input');
+        });
+    });
+</script>
+{% endblock %}

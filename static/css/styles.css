@@ -1,0 +1,205 @@
+:root {
+    /* Logo Brand Colors */
+    --logo-cyan: #00D2FF;
+    --logo-pink: #FF10F0;
+    --logo-lime: #BFFF00;
+    --logo-yellow: #FFFF00;
+    --logo-indigo: #1D1D3B;
+    /* Deep Indigo from logo shadows */
+
+    /* Functional Colors */
+    --primary-cyan: var(--logo-cyan);
+    --secondary-pink: var(--logo-pink);
+    --accent-lime: var(--logo-lime);
+    --dark-bg: #0f0f1a;
+    --sidebar-bg: var(--logo-indigo);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --text-dark: #12122b;
+}
+
+/* Global Styles */
+body {
+    background-color: #f4f6fa;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text-dark);
+}
+
+/* Wrapper and Sidebar */
+#wrapper {
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Sidebar with Logo-Inspired Indigo & Cyan Border */
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: 250px;
+    margin-left: 0;
+    transition: margin 0.25s ease-out;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, var(--logo-indigo) 0%, #0d0d1a 100%);
+    border-right: 3px solid var(--logo-cyan);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: -250px;
+}
+
+.sidebar-heading {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+}
+
+.logo-img {
+    max-width: 25px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 3px rgba(0, 210, 255, 0.3));
+}
+
+/* Sidebar Links - Cyber Hover Effect */
+.list-group-item.bg-dark {
+    background-color: transparent !important;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border-left: 5px solid transparent !important;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.list-group-item.bg-dark:hover {
+    background: linear-gradient(90deg, rgba(0, 210, 255, 0.15) 0%, transparent 100%) !important;
+    border-left: 5px solid var(--logo-cyan) !important;
+    color: var(--logo-cyan) !important;
+    padding-left: 1.7rem !important;
+}
+
+.list-group-item.bg-dark i {
+    width: 20px;
+}
+
+/* Navbar with Cyan Accent Line */
+.navbar {
+    border-top: 4px solid var(--logo-cyan) !important;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Premium Product Cards (Glassmorphism) */
+.card-glass {
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 210, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(29, 29, 59, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-glass:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 210, 255, 0.12);
+    border-color: var(--logo-cyan);
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    color: var(--sidebar-bg);
+}
+
+/* Branded Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--logo-cyan) 0%, #0095ff 100%);
+    border: none;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    box-shadow: 0 4px 12px rgba(0, 210, 255, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 210, 255, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--logo-pink) 0%, #d600b3 100%);
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 0, 128, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--logo-lime) 0%, #9bc200 100%);
+    color: var(--logo-indigo) !important;
+    border: none;
+    box-shadow: 0 4px 15px rgba(191, 255, 0, 0.3);
+    font-weight: 700;
+}
+
+.btn-success:hover {
+    background: var(--accent-lime);
+    filter: brightness(1.05);
+    color: #1a1a2e;
+}
+
+/* Table Design with Indigo Header */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.thead-logo {
+    background: linear-gradient(135deg, var(--logo-indigo) 0%, #2a2a5a 100%) !important;
+    color: var(--logo-cyan) !important;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 210, 255, 0.03);
+}
+
+/* Badge Neon Effects */
+.badge.bg-success {
+    background-color: var(--logo-lime) !important;
+    color: var(--logo-indigo);
+    box-shadow: 0 0 8px rgba(191, 255, 0, 0.3);
+}
+
+/* Custom Gradients */
+.bg-gradient-logo {
+    background: linear-gradient(135deg, var(--logo-indigo) 0%, var(--logo-cyan) 100%) !important;
+}
+
+.bg-cyan-neon {
+    background: var(--primary-cyan);
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+}
+
+/* Custom Accents */
+.text-cyan {
+    color: var(--logo-cyan) !important;
+}
+
+.text-pink {
+    color: var(--logo-pink) !important;
+}
+
+.text-lime {
+    color: var(--logo-lime) !important;
+}
+
+/* Badges with Logo Vibrancy */
+.badge.bg-warning {
+    background-color: var(--logo-yellow) !important;
+    color: #000;
+    box-shadow: 0 0 8px rgba(255, 255, 0, 0.3);
+}

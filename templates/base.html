@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SistGoy ERP{% endblock %}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body class="bg-light">
+
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-dark text-white" id="sidebar-wrapper">
+            <div class="sidebar-heading p-3 border-bottom border-primary">
+                <h4 class="mb-0 text-white fw-bold">A&M Diseños</h4>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{% url 'dashboard' %}"
+                    class="list-group-item list-group-item-action bg-dark text-white border-0 py-3">
+                    <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                </a>
+                <a href="#inventorySubmenu"
+                    class="list-group-item list-group-item-action bg-dark text-white border-0 py-3"
+                    data-bs-toggle="collapse">
+                    <i class="fas fa-boxes me-2"></i> Inventario <i
+                        class="fas fa-chevron-down float-end small mt-1"></i>
+                </a>
+                <div class="collapse" id="inventorySubmenu">
+                    <a href="{% url 'supply-list' %}"
+                        class="list-group-item list-group-item-action bg-secondary text-white border-0 ps-5 py-2 small">Insumos</a>
+                    <a href="{% url 'baseproduct-list' %}"
+                        class="list-group-item list-group-item-action bg-secondary text-white border-0 ps-5 py-2 small">Productos
+                        Base</a>
+                </div>
+
+                <a href="#productionSubmenu"
+                    class="list-group-item list-group-item-action bg-dark text-white border-0 py-3"
+                    data-bs-toggle="collapse">
+                    <i class="fas fa-cogs me-2"></i> Producción <i class="fas fa-chevron-down float-end small mt-1"></i>
+                </a>
+                <div class="collapse" id="productionSubmenu">
+                    <a href="{% url 'finalproduct-list' %}"
+                        class="list-group-item list-group-item-action bg-secondary text-white border-0 ps-5 py-2 small">Productos
+                        Finales</a>
+                </div>
+
+                <a href="#salesSubmenu" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3"
+                    data-bs-toggle="collapse">
+                    <i class="fas fa-shopping-cart me-2"></i> Ventas <i
+                        class="fas fa-chevron-down float-end small mt-1"></i>
+                </a>
+                <div class="collapse" id="salesSubmenu">
+                    <a href="{% url 'order-list' %}"
+                        class="list-group-item list-group-item-action bg-secondary text-white border-0 ps-5 py-2 small">Pedidos</a>
+                    <a href="{% url 'customer-list' %}"
+                        class="list-group-item list-group-item-action bg-secondary text-white border-0 ps-5 py-2 small">Clientes</a>
+                </div>
+                <a href="{% url 'admin:index' %}"
+                    class="list-group-item list-group-item-action bg-dark text-white border-0 py-3 mt-auto">
+                    <i class="fas fa-user-shield me-2"></i> Admin Panel
+                </a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm px-4 py-3"
+                style="border-top: 3px solid var(--primary-cyan) !important;">
+                <button class="btn btn-outline-secondary" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <div class="ms-auto d-flex align-items-center">
+                    <span class="me-3 text-muted">Bienvenido, {{ user.username|default:"Usuario" }}</span>
+                    {% if user.is_authenticated %}
+                    <!-- Logout link here later -->
+                    {% endif %}
+                </div>
+            </nav>
+
+            <div class="container-fluid py-4 px-4">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", function (e) {
+            e.preventDefault();
+            document.getElementById("wrapper").classList.toggle("toggled");
+        });
+    </script>
+</body>
+
+</html>

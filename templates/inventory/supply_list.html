@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventario de Insumos - SistGoy ERP{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Insumos</h2>
+    <div class="d-flex gap-2">
+        <form class="d-flex" method="get">
+            <select class="form-select me-2" name="category" onchange="this.form.submit()" style="max-width: 200px;">
+                <option value="">Todas las Categorías</option>
+                {% for cat in categories %}
+                <option value="{{ cat.id }}" {% if request.GET.category == cat.id|slugify %}selected{% endif %}>
+                    {{ cat.name }}</option>
+                {% endfor %}
+            </select>
+            <input class="form-control me-2" type="search" name="q" placeholder="Buscar insumo..." aria-label="Buscar"
+                value="{{ request.GET.q|default:'' }}">
+            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <a href="{% url 'supply-add' %}" class="btn btn-primary text-nowrap"><i class="fas fa-plus me-2"></i> Nuevo
+            Insumo</a>
+    </div>
+</div>
+
+<div class="card card-glass border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+                <tr>
+                    <th class="ps-4">Nombre</th>
+                    <th>Categoría</th>
+                    <th>Unidad</th>
+                    <th>Stock Actual</th>
+                    <th>Stock Mínimo</th>
+                    <th>Costo Unitario</th>
+                    <th class="pe-4 text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for supply in supplies %}
+                <tr {% if supply.stock <= supply.min_stock %}class="table-danger" {% endif %}>
+                    <td class="ps-4 fw-bold">{{ supply.name }}</td>
+                    <td>
+                        {% if supply.category %}
+                        <span class="badge bg-info text-dark">{{ supply.category.name }}</span>
+                        {% else %}
+                        <span class="badge bg-light text-muted">Gral</span>
+                        {% endif %}
+                    </td>
+                    <td><span class="badge bg-secondary">{{ supply.unit.abbreviation }}</span></td>
+                    <td>{{ supply.stock }}</td>
+                    <td>{{ supply.min_stock }}</td>
+                    <td>{{ supply.cost_per_unit }}</td>
+                    <td class="pe-4 text-end">
+                        <a href="{% url 'supply-edit' supply.pk %}" class="btn btn-sm btn-outline-primary"><i
+                                class="fas fa-edit"></i></a>
+                        <a href="{% url 'supply-delete' supply.pk %}" class="btn btn-sm btn-outline-danger ms-1"><i
+                                class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-4 text-muted">No hay insumos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
